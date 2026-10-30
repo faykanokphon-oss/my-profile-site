@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แนะนำตัว - นายทองเหม็น ใข่หอม</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 25%, #e8eaf6 50%, #e0f7fa 75%, #fff3e0 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating bubbles */
+        .bubbles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: floatBubble linear infinite;
+        }
+
+        @keyframes floatBubble {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.15; }
+            90% { opacity: 0.15; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* Header */
+        .header {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px 20px 20px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #e91e63, #9c27b0, #2196f3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        /* Profile Card */
+        .profile-card {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+            margin: 30px auto;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.5);
+            text-align: center;
+            animation: cardAppear 1s ease-out;
+        }
+
+        @keyframes cardAppear {
+            0% { opacity: 0; transform: translateY(50px) scale(0.9); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .profile-img-wrapper {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 25px;
+        }
+
+        .profile-img-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e91e63, #ff9800, #4caf50, #2196f3, #9c27b0);
+            background-size: 300% 300%;
+            animation: borderRotate 4s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes borderRotate {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            transition: transform 0.5s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.08) rotate(3deg);
+        }
+
+        .name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .name-en {
+            font-size: 0.95rem;
+            color: #888;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
+        .age-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(238, 90, 36, 0.3);
+        }
+
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #e91e63, #9c27b0);
+            margin: 20px auto;
+            border-radius: 3px;
+        }
+
+        /* About Section */
+        .about-section {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            animation: cardAppear 1s ease-out 0.3s both;
+        }
+
+        .about-section h2 {
+            font-size: 1.3rem;
+            color: #9c27b0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .about-section h2 .emoji {
+            font-size: 1.5rem;
+        }
+
+        .about-text {
+            color: #555;
+            line-height: 1.9;
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        .about-text strong {
+            color: #e91e63;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fff9c4, #fff3e0);
+            border-left: 4px solid #ff9800;
+            padding: 15px 20px;
+            border-radius: 0 15px 15px 0;
+            margin: 15px 0;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .highlight-box .emoji-big {
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Hobby Section */
+        .hobby-section {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            animation: cardAppear 1s ease-out 0.5s both;
+        }
+
+        .hobby-section h2 {
+            font-size: 1.3rem;
+            color: #2196f3;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hobby-card {
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .hobby-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .hobby-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: bounce 2s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hobby-card p {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        /* Fun fact */
+        .fun-fact {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+            margin: 20px auto;
+            background: linear-gradient(135deg, #e91e63, #9c27b0);
+            border-radius: 25px;
+            padding: 25px 30px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(156, 39, 176, 0.3);
+            animation: cardAppear 1s ease-out 0.7s both;
+        }
+
+        .fun-fact h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .fun-fact p {
+            font-weight: 300;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        .footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px 20px;
+            color: #aaa;
+            font-size: 0.85rem;
+            font-weight: 300;
+        }
+
+        .footer .heart {
+            color: #e91e63;
+            animation: heartbeat 1.5s ease infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Responsive */
+        @media (max-width: 540px) {
+            .profile-card, .about-section, .hobby-section, .fun-fact {
+                margin-left: 15px;
+                margin-right: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .name {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Bubbles -->
+    <div class="bubbles" id="bubbles"></div>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>✨ แนะนำตัวเอง ✨</h1>
+    </div>
+
+    <!-- Profile Card -->
+    <div class="profile-card">
+        <div class="profile-img-wrapper">
+            <img src="profile.jpg" alt="รูปโปรไฟล์ของทองเหม็น" class="profile-img">
+        </div>
+        <div class="name">นายทองเหม็น ใข่หอม</div>
+        <div class="name-en">Mr. Thongmen Khaihom</div>
+        <span class="age-badge">🎂 อายุ 50 ปี</span>
+        <div class="divider"></div>
+        <p class="about-text">
+            สวัสดีครับ! ผมชื่อ <strong>ทองเหม็น ใข่หอม</strong><br>
+            ยินดีต้อนรับสู่เว็บไซต์ส่วนตัวของผมครับ 🙏
+        </p>
+    </div>
+
+    <!-- About Section -->
+    <div class="about-section">
+        <h2><span class="emoji">👤</span> เกี่ยวกับฉัน</h2>
+        <p class="about-text">
+            ผมเป็นชายวัย <strong>50 ปี</strong> ที่ใส่ใจในสุขภาพและความสะอาดของร่างกายเป็นอย่างมาก 
+            ผมเชื่อว่าการดูแลตัวเองเป็นสิ่งสำคัญที่ไม่ควรมองข้าม ไม่ว่าจะเป็นเรื่องเล็กน้อยแค่ไหนก็ตาม
+        </p>
+        <div class="highlight-box">
+            <span class="emoji-big">💡</span>
+            <strong>ปรัชญาชีวิต:</strong> "ดูแลตัวเองให้ดี ก่อนที่จะดูแลคนอื่น"
+        </div>
+    </div>
+
+    <!-- Hobby Section -->
+    <div class="hobby-section">
+        <h2><span class="emoji">🎯</span> งานอดิเรกสุดพิเศษ</h2>
+        <div class="hobby-card">
+            <div class="hobby-icon">🥚👃</div>
+            <p>
+                ผมชอบ<strong>นั่งดมไข่ตัวเอง</strong>เป็นกิจวัตรประจำวัน<br>
+                เพราะต้อง<strong>เช็คว่าไข่ของผมโอเคมั้ย</strong><br>
+                ถือเป็นการตรวจสุขภาพเบื้องต้นแบบฉบับ<br>
+                <strong>"ทองเหม็น สไตล์"</strong> ครับ 😄
+            </p>
+        </div>
+    </div>
+
+    <!-- Fun Fact -->
+    <div class="fun-fact">
+        <h3>🤩 Fun Fact</h3>
+        <p>
+            แม้ชื่อจะ "เหม็น" แต่ไข่ต้อง "หอม" เสมอ! <br>
+            นี่คือมาตรฐานคุณภาพชีวิตของผมครับ 🌟
+        </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>สร้างด้วย <span class="heart">❤️</span> โดย นายทองเหม็น ใข่หอม</p>
+        <p>© 2026 All Rights Reserved</p>
+    </div>
+
+    <script>
+        // Create floating bubbles
+        const bubblesContainer = document.getElementById('bubbles');
+        const colors = ['#e91e63', '#9c27b0', '#2196f3', '#4caf50', '#ff9800', '#00bcd4'];
+
+        for (let i = 0; i < 20; i++) {
+            const bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            const size = Math.random() * 80 + 20;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + '%';
+            bubble.style.background = color;
+            bubble.style.animationDuration = (Math.random() * 15 + 10) + 's';
+            bubble.style.animationDelay = (Math.random() * 10) + 's';
+            bubblesContainer.appendChild(bubble);
+        }
+    </script>
+</body>
+</html>
